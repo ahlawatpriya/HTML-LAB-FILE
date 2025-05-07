@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Form</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .table-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            display: none;
+        }
+        .form-title {
+            color: #0d6efd;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .required-field::after {
+            content: " *";
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Admission Form -->
+                <div class="form-container">
+                    <h2 class="form-title">Student Admission Form</h2>
+                    <form id="admissionForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="form-label required-field">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="form-label required-field">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="dob" class="form-label required-field">Date of Birth</label>
+                                <input type="date" class="form-control" id="dob" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="gender" class="form-label required-field">Gender</label>
+                                <select class="form-select" id="gender" required>
+                                    <option value="" selected disabled>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label required-field">Email Address</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="phone" class="form-label required-field">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address" class="form-label required-field">Address</label>
+                            <textarea class="form-control" id="address" rows="3" required></textarea>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="course" class="form-label required-field">Course</label>
+                                <select class="form-select" id="course" required>
+                                    <option value="" selected disabled>Select Course</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Engineering">Engineering</option>
+                                    <option value="Business Administration">Business Administration</option>
+                                    <option value="Medicine">Medicine</option>
+                                    <option value="Arts">Arts</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="year" class="form-label required-field">Year</label>
+                                <select class="form-select" id="year" required>
+                                    <option value="" selected disabled>Select Year</option>
+                                    <option value="1st Year">1st Year</option>
+                                    <option value="2nd Year">2nd Year</option>
+                                    <option value="3rd Year">3rd Year</option>
+                                    <option value="4th Year">4th Year</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Submit Application</button>
+                            <button type="reset" class="btn btn-outline-secondary">Reset Form</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Display Submitted Data -->
+                <div class="table-container" id="submittedDataContainer">
+                    <h3 class="text-center mb-4">Submitted Applications</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="submittedDataTable">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>DOB</th>
+                                    <th>Gender</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Course</th>
+                                    <th>Year</th>
+                                </tr>
+                            </thead>
+                            <tbody id="submittedDataBody">
+                                <!-- Data will be inserted here dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const admissionForm = document.getElementById('admissionForm');
+            const submittedDataBody = document.getElementById('submittedDataBody');
+            const submittedDataContainer = document.getElementById('submittedDataContainer');
+
+            // Handle form submission
+            admissionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const dob = document.getElementById('dob').value;
+                const gender = document.getElementById('gender').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const address = document.getElementById('address').value;
+                const course = document.getElementById('course').value;
+                const year = document.getElementById('year').value;
+
+                // Format date for display
+                const formattedDob = new Date(dob).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                // Create new table row
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>${firstName} ${lastName}</td>
+                    <td>${formattedDob}</td>
+                    <td>${gender}</td>
+                    <td>${email}</td>
+                    <td>${phone}</td>
+                    <td>${course}</td>
+                    <td>${year}</td>
+                `;
+
+                // Add row to table
+                submittedDataBody.appendChild(newRow);
+
+                // Show the table container if hidden
+                submittedDataContainer.style.display = 'block';
+
+                // Reset form
+                admissionForm.reset();
+
+                // Scroll to the table
+                submittedDataContainer.scrollIntoView({ behavior: 'smooth' });
+
+                // Show success alert
+                alert('Application submitted successfully!');
+            });
+        });
+    </script>
+</body>
+</html>
